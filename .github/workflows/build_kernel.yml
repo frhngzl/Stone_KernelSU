@@ -157,3 +157,13 @@ jobs:
               </details>
           draft: false
           prerelease: false
+- name: Create cache directory
+  run: mkdir -p ~/.ccache
+
+- name: Cache ccache
+  uses: actions/cache@v2
+  with:
+    path: ~/.ccache
+    key: ${{ runner.os }}-ccache-${{ github.sha }}
+    restore-keys: |
+      ${{ runner.os }}-ccache-
