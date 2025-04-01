@@ -11,7 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ["LineageOS-20", "Zenitsu", "DivestOS-13", "Sage-Android-14"]
+        version: ["Xiaomi-Stone-KernelSU"]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      # Setup GH_PAT for authentication
+      - name: Set up GH_PAT
+        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
+
+      # Example: Define steps to build for each version
+      - name: Build KernelSU for ${{ matrix.version }}
+        run: |
+          echo "Building KernelSU for ${matrix.version}"
+          # Add your build steps for each version here, e.g., cloning the kernel repo, configuring, building
+
+      # Example of packaging with AnyKernel3 (customize this)
+      - name: Package kernel with AnyKernel3
+        run: |
+          git clone https://github.com/osm0sis/AnyKernel3.git
+          cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
+          cd AnyKernel3
+          # Add your AnyKernel3 packaging steps here
 
     env:
       VERSION: ${{ matrix.version }}
